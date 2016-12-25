@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.example.android.intermediate.utilities.Networkutilities;
 
+import java.io.IOException;
 import java.net.URL;
 
 public class MainActivity extends AppCompatActivity {
@@ -40,6 +41,13 @@ public class MainActivity extends AppCompatActivity {
         String githubquery = mSearchBoxEditText.getText().toString();
         URL githubSearchUrl = Networkutilities.buildUrl(githubquery);
         mURLDisplayTextview.setText(githubSearchUrl.toString());
+        String githubSearchResults = null;
+        try{
+            githubSearchResults = Networkutilities.getResponseFromHttpUrl(githubSearchUrl);
+            mSearchResult.setText(githubSearchResults.toString());
+        }catch (IOException e){
+            e.printStackTrace();
+        }
 
     }
     @Override

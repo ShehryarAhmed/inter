@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">intermediate</string>
+    <string name="search">Search</string>
+
 </resources>

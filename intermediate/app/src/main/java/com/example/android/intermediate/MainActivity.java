@@ -32,5 +32,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int menuItemThatWasSelected = item.getItemId();
+        if(menuItemThatWasSelected == R.id.action_search){
+            Toast.makeText(MainActivity.this, "Search", Toast.LENGTH_SHORT).show();
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

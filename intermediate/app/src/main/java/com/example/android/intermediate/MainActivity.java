@@ -1,5 +1,6 @@
 package com.example.android.intermediate;
 
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -41,14 +42,7 @@ public class MainActivity extends AppCompatActivity {
         String githubquery = mSearchBoxEditText.getText().toString();
         URL githubSearchUrl = Networkutilities.buildUrl(githubquery);
         mURLDisplayTextview.setText(githubSearchUrl.toString());
-        String githubSearchResults = null;
-        try{
-            githubSearchResults = Networkutilities.getResponseFromHttpUrl(githubSearchUrl);
-            mSearchResult.setText(githubSearchResults.toString());
-        }catch (IOException e){
-            e.printStackTrace();
-        }
-
+        new GithubQueryTask().execute(githubSearchUrl);
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -65,4 +59,24 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public class GithubQueryTask extends AsyncTask<URL ,Void ,String>{
+        @Override
+        protected String doInBackground(URL... urls) {
+            URL searchUrl = urls[0];
+            String githubSearchResult = null;
+            try{
+                githubSearchResult = Networkutilities.getResponseFromHttpUrl(searchUrl);
+            }catch (IOException e){
+                e.printStackTrace();
+            }
+            return githubSearchResult;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            if(s != null && s.equals("")){
+                mSearchResult.setText(s);
+            }
+        }
+    }
 }

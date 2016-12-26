@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +23,11 @@ public class MainActivity extends AppCompatActivity {
 
     TextView mSearchResult;
 
+    TextView mErrorMessageDisplay;
+
+    ProgressBar mLoadingIndicator;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,9 +40,14 @@ public class MainActivity extends AppCompatActivity {
 
         mSearchResult   = (TextView) findViewById(R.id.tv_github_search_result);
 
+        mErrorMessageDisplay = (TextView) findViewById(R.id.tv_error_message_display);
+
+        mLoadingIndicator = (ProgressBar) findViewById(R.id.mProgressBar);
+
 
     }
 
+    
 
     private void makeGithubSearchQuery(){
         String githubquery = mSearchBoxEditText.getText().toString();
@@ -76,6 +87,9 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(String s) {
             if(s != null && s.equals("")){
                 mSearchResult.setText(s);
+            }
+            else {
+                mSearchResult.setText("nothing");
             }
         }
     }

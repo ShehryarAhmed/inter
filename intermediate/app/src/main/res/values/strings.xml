@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">intermediate</string>
     <string name="search">Search</string>
+    <string name="error_message">Failed to get results, Please Try Again.</string>
 
 </resources>

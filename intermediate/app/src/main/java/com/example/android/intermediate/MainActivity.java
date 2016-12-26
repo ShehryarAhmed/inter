@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -47,8 +48,18 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    
+    private void showJsonDataView(){
 
+        mErrorMessageDisplay.setVisibility(View.INVISIBLE);
+
+        mSearchResult.setVisibility(View.VISIBLE);
+
+    }
+
+    private void showErrorMessage(){
+        mErrorMessageDisplay.setVisibility(View.VISIBLE);
+        mSearchResult.setVisibility(View.INVISIBLE);
+    }
     private void makeGithubSearchQuery(){
         String githubquery = mSearchBoxEditText.getText().toString();
         URL githubSearchUrl = Networkutilities.buildUrl(githubquery);
@@ -71,6 +82,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public class GithubQueryTask extends AsyncTask<URL ,Void ,String>{
+
+
         @Override
         protected String doInBackground(URL... urls) {
             URL searchUrl = urls[0];
@@ -85,12 +98,23 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String s) {
+
+            mLoadingIndicator.setVisibility(View.INVISIBLE);
             if(s != null && s.equals("")){
+                showJsonDataView();
                 mSearchResult.setText(s);
             }
             else {
-                mSearchResult.setText("nothing");
+                showErrorMessage();
             }
         }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            mLoadingIndicator.setVisibility(View.VISIBLE);
+        }
     }
+
+
 }

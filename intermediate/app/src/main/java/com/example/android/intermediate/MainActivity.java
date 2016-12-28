@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
 
         mURLDisplayTextview = (TextView)findViewById(R.id.tv_display_url);
 
-        mSearchResult   = (TextView) findViewById(R.id.tv_github_search_result);
+        mSearchResult   = (TextView) findViewById(R.id.tv_github_search_result_json);
 
         mErrorMessageDisplay = (TextView) findViewById(R.id.tv_error_message_display);
 
